@@ -6,8 +6,6 @@ import pandas as pd
 from sklearn.preprocessing import StandardScaler
 
 from src.pipeline.predict_pipeline import CustomData, PredictPipeline
-from src.logger import logging
-from src.exception import CustomException
 
 application = Flask(__name__)
 app = application
@@ -36,8 +34,8 @@ def predict_datapoint():
             results = predict_pipeline.predict(pred_df)
             return render_template('home.html', results=results[0])
         except Exception as e:
-            logging.error(traceback.format_exc())
-            raise CustomException(e, sys)
+            print(traceback.format_exc())
+            return render_template('home.html', error=str(e))
 
 if __name__ == "__main__":
     app.run(host="0.0.0.0")
